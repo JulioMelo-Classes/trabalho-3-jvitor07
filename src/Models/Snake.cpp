@@ -29,3 +29,11 @@ void Snake::moveLeft() {
 void Snake::moveRight() {
     this->posCol += 1;
 }
+
+int Snake::getLength() {
+    return this->length;
+}
+
+void Snake::increaseLength(int value) {
+    this->length += value;
+}

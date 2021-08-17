@@ -38,6 +38,18 @@ class Snake
          * Função que movimenta para direita.
          */ 
         void moveRight();
+
+        /**
+         * Função que pega o tamanho atual.
+         * @return int valor do tamanho
+         */ 
+        int getLength();
+        
+        /**
+         * Função aumenta o tamanho.
+         * @param int value = 1(valor default de 1), valor que devera ser aumentado no tamanho
+         */ 
+        void increaseLength(int value = 1);
 };
 
 #endif
