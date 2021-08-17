@@ -18,6 +18,10 @@ class Snake
          * @return std::pair<int, int> { linha, coluna } 
          */ 
         std::pair<int, int> getCurrentPosition();
+        void moveUp();
+        void moveDown();
+        void moveLeft();
+        void moveRight();
 };
 
 #endif

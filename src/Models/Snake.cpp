@@ -13,3 +13,19 @@ std::pair<int, int> Snake::getCurrentPosition() {
         this->posCol
     };
 }
+
+void Snake::moveUp() {
+    this->posRow -= 1;
+}
+
+void Snake::moveDown() {
+    this->posRow += 1;
+}
+
+void Snake::moveLeft() {
+    this->posCol -= 1;
+}
+
+void Snake::moveRight() {
+    this->posCol += 1;
+}
