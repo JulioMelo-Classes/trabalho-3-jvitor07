@@ -18,9 +18,25 @@ class Snake
          * @return std::pair<int, int> { linha, coluna } 
          */ 
         std::pair<int, int> getCurrentPosition();
+
+        /**
+         * Função que movimenta para cima.
+         */ 
         void moveUp();
+        
+        /**
+         * Função que movimenta para baixo.
+         */ 
         void moveDown();
+
+        /**
+         * Função que movimenta para esquerda.
+         */ 
         void moveLeft();
+
+        /**
+         * Função que movimenta para direita.
+         */ 
         void moveRight();
 };
 
