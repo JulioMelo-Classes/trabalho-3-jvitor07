@@ -9,6 +9,8 @@ class Snake
         int posRow;
         int posCol;
         int length;
+        int lifes;
+        char value;
 
     public: 
         Snake(int row, int col);
@@ -50,6 +52,18 @@ class Snake
          * @param int value = 1(valor default de 1), valor que devera ser aumentado no tamanho
          */ 
         void increaseLength(int value = 1);
+
+        /**
+         * Função que seta a direção atual da cobra
+         * @param char value = valor que representa a cabeça da cobra
+         */
+        void setValue (char value);
+
+        /**
+         * Função que pega a direção atual da cobra
+         * @return char valor que representa a cabeça da cobra
+         */
+        char getValue();
 };
 
 #endif

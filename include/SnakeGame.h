@@ -2,6 +2,11 @@
 #define SnakeGame_h
 #include <iostream>
 #include <vector>
+#include <utility>
+
+#include "Models/Snake.hpp"
+#include "Models/Pixel.hpp"
+#include "Models/Map.hpp"
 
 
 class SnakeGame{
@@ -58,6 +63,15 @@ class SnakeGame{
         * @brief é chamada quando o jogo termina a fim de destruir/resetar elementos do estado do jogo
         **/
         void game_over();
+
+        bool itsPossible(std::pair<int, int> cords);
+        void putElement(char value, std::pair<int, int> pos);
+        void removeElement(std::pair<int, int> pos);
+        void movePlayerUp(Snake *snake);
+        void movePlayerDown(Snake *snake);
+        void movePlayerRight(Snake *snake);
+        void movePlayerLeft(Snake *snake);
+        void setFood();
 };
 
 #endif //SnakeGame_h

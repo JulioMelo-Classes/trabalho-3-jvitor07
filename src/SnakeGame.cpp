@@ -2,7 +2,7 @@
 
 #include <iostream>
 #include <fstream>
-
+#include "Services/randNumberService.hpp"
 #include <chrono> //por causa do sleep
 #include <thread> //por causa do sleep
 
@@ -114,11 +114,110 @@ void SnakeGame::render(){
 void SnakeGame::game_over(){
 }
 
+bool SnakeGame::itsPossible(std::pair<int, int> cords) {
+    return !(cords.first < 0) && !(cords.second < 0) && !(cords.first > this->maze.size()) && !(cords.second > (this->maze.at(cords.first)).size()) 
+    && !(this->maze[cords.first][cords.second] == '#') && !(this->maze[cords.first][cords.second] == '.') && !((this->maze[cords.first][cords.second] == 'o'));
+}
+
+void SnakeGame::putElement(char value, std::pair<int, int> pos) {
+    bool status = this->itsPossible(pos);
+
+    if(status) {
+        this->maze[pos.first][pos.second] = value;
+    }
+}
+
+void SnakeGame::removeElement(std::pair<int, int> pos) {
+    bool status = this->itsPossible(pos);
+
+    if(status) {
+        this->maze[pos.first][pos.second] = ' ';
+    }
+}
+
+void SnakeGame::movePlayerUp(Snake *snake) {
+    std::pair<int, int> pos = snake->getCurrentPosition();
+
+    bool currentStatus = this->itsPossible(pos);
+    bool nextPositionStatus = this->itsPossible({pos.first - 1, pos.second});
+
+    if(currentStatus && nextPositionStatus) {
+        this->removeElement(pos);
+        snake->moveUp();
+        this->putElement(snake->getValue(), snake->getCurrentPosition());
+    }
+}
+
+void SnakeGame::movePlayerDown(Snake *snake) {
+    std::pair<int, int> pos = snake->getCurrentPosition();
+
+    bool currentStatus = this->itsPossible(pos);
+    bool nextPositionStatus = this->itsPossible({pos.first + 1, pos.second});
+
+    if(currentStatus && nextPositionStatus) {
+        this->removeElement(pos);
+        snake->moveDown();
+        this->putElement(snake->getValue(), snake->getCurrentPosition());
+    }
+}
+
+void SnakeGame::movePlayerLeft(Snake *snake) {
+    std::pair<int, int> pos = snake->getCurrentPosition();
+
+    bool currentStatus = this->itsPossible(pos);
+    bool nextPositionStatus = this->itsPossible({pos.first, pos.second - 1});
+
+    if(currentStatus && nextPositionStatus) {
+        this->removeElement(pos);
+        snake->moveLeft();
+        this->putElement(snake->getValue(), snake->getCurrentPosition());
+    }
+}
+
+void SnakeGame::movePlayerRight(Snake *snake) {
+    std::pair<int, int> pos = snake->getCurrentPosition();
+
+    bool currentStatus = this->itsPossible(pos);
+    bool nextPositionStatus = this->itsPossible({pos.first, pos.second + 1});
+
+    if(currentStatus && nextPositionStatus) {
+        this->removeElement(pos);
+        snake->moveRight();
+        this->putElement(snake->getValue(), snake->getCurrentPosition());
+    }
+}
+
+void SnakeGame::setFood() {
+    std::vector<std::pair<int, int>> points;
+    int row = 0;
+    for(auto itRow = this->maze.begin(); itRow != this->maze.end(); itRow++) {
+        
+        int col = 0;
+        for(auto itCol = itRow->begin(); itCol != itRow->end(); itCol++) {
+            if(this->itsPossible({row, col})) {
+                points.push_back({row, col});
+            }
+            col++;
+        }
+        row++;
+    }
+
+    int value = randNumberService::generateNumber(0, points.size());
+    this->putElement('F', {points[value].first, points[value].second});
+}
+
 void SnakeGame::loop(){
+    Snake *player = new Snake(0, 1);
+    this->putElement(player->getValue(), player->getCurrentPosition());
+    this->setFood();
+    
     while(state != GAME_OVER){
         process_actions();
         update();
+        this->movePlayerDown(player);
+        this->movePlayerRight(player);
         render();
         wait(1000);// espera 1 segundo entre cada frame
     }
+    
 }
