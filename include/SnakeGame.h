@@ -2,7 +2,13 @@
 #define SnakeGame_h
 #include <iostream>
 #include <vector>
+#include <utility>
 
+#include "Models/Snake.hpp"
+#include "Services/ClodaService.hpp"
+#include "Services/TranslateService.hpp"
+#include "Services/SplitService.hpp"
+#include "Services/RandPosService.hpp"
 
 class SnakeGame{
     public:
@@ -21,7 +27,8 @@ class SnakeGame{
         int frameCount; //<! contador de frames, usado apenas como exemplo
         std::string choice; //<! usado na função process_actions para guardar a escolha do usuário
         GameStates state; //<! guarda o estado do jogo
-
+        std::pair<int, int> dimensions;
+        int foods;
     public:
         /**
         * @brief construtor padrão, fique à vontade para adicionar parâmetros se desejar
@@ -58,6 +65,13 @@ class SnakeGame{
         * @brief é chamada quando o jogo termina a fim de destruir/resetar elementos do estado do jogo
         **/
         void game_over();
+        void movePlayer(Snake *player, std::string cmd);
+        std::pair<int, int> getinitialPos();
+        void insertItem(std::pair<int, int> pos, char item);
+        void removeItem(std::pair<int, int> pos); 
+        bool collide(std::string cmd, Snake *player);
+        void understandMovement(Snake *player, std::pair<int, int> to);
+
 };
 
 #endif //SnakeGame_h
