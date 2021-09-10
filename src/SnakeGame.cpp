@@ -60,8 +60,8 @@ void SnakeGame::update(){
     //atualiza o estado do jogo de acordo com o resultado da chamada de "process_input"
     switch(state){
         case RUNNING:
-            if(frameCount>0 && frameCount%10 == 0) //depois de 10 frames o jogo pergunta se o usuário quer continuar
-                state = WAITING_USER;
+         //  if(frameCount>0 && frameCount%10 == 0) //depois de 10 frames o jogo pergunta se o usuário quer continuar
+         //       state = WAITING_USER;
             break;
         case WAITING_USER: //se o jogo estava esperando pelo usuário então ele testa qual a escolha que foi feita
             if(choice == "n"){
@@ -235,7 +235,7 @@ void SnakeGame::loop(){
                 update();
                 this->understandMovement(player, *it);
                 render();
-                wait(1000);// espera 1 segundo entre cada frame
+                wait(100);// espera 1 segundo entre cada frame
                 it++;
                 if(player->getPos() == end) break;
                 if(player->gameIsOver()) {
@@ -250,7 +250,7 @@ void SnakeGame::loop(){
                 this->movePlayer(player, "right");
                 this->insertItem(player->getPos(), player->getValue());
                 render();
-                wait(1000);
+                wait(100);
             }
             if(player->gameIsOver()) {
                 this->state = GAME_OVER;
